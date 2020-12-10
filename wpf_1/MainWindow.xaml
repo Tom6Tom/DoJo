@@ -9,7 +9,7 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
 
-        <materialDesignMahApps:Card Content="Card" HorizontalAlignment="Left" Margin="346,120,0,0" VerticalAlignment="Top"/>
+        <materialDesignMahApps:Card Content="a" HorizontalAlignment="Left" Margin="346,120,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

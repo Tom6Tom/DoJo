@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace wpf_1
+namespace case9
 {
     /// <summary>
     /// MainWindow.xaml の相互作用ロジック

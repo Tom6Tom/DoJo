@@ -18,6 +18,10 @@
             <MenuItem Header="Add"  Command="{Binding AddRowCommand}" />
             <MenuItem Header="Delete"  Command="{Binding DeleteRowCommand}"/>
         </Menu>
-        <DataGrid Grid.Row="1" ItemsSource="{Binding GridData}" />
+        <DataGrid 
+            Grid.Row="1" 
+            ItemsSource="{Binding GridData}" 
+            SelectedIndex="{Binding ItemIndex}"
+            />
     </Grid>
 </Window>

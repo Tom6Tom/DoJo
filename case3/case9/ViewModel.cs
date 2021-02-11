@@ -3,54 +3,19 @@ using System.ComponentModel;
 
 namespace case9
 {
-    internal class ViewModel : INotifyPropertyChanged
-    {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private string _text;
-        public string Text
-        {
-            set
-            {
-                if (_text != value)
-                {
-                    _text = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Text)));
-                    Expression = _text.ToUpper();
-                    DeleteRowCommand.RaiseCanExecuteChanged();
-                }
-            }
-            get
-            {
-                return _text;
-            }
-        }
-
-        private string _expression;
-        public string Expression
-        {
-            set
-            {
-                if (_expression != value)
-                {
-                    _expression = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Expression)));
-                }
-            }
-            get
-            {
-                return _expression;
-            }
-        }
+    internal class ViewModel 
+    {   
         private DelegateCommand _addRowCommand;
         public DelegateCommand AddRowCommand
         {
             get
             {
-                return _addRowCommand ??= new DelegateCommand(
-                    _ => Text = string.Empty,
-                    _ => !string.IsNullOrEmpty(Text)
-                );
+                return _addRowCommand ??=
+                    new DelegateCommand(
+                        // TBD 入力ダイアログ
+                        () => { this.GridData.Add(new GridDataViewModel() { ID = -1, Name = "初期値 三郎", Sex = SexType.Other }); },
+                        () => { return true; }
+                        );
             }
         }
         private DelegateCommand _deleteRowCommand;
@@ -58,10 +23,11 @@ namespace case9
         {
             get
             {
-                return _deleteRowCommand??= new DelegateCommand(
-                    _ => Text = string.Empty,
-                    _ => !string.IsNullOrEmpty(Text)
-                );
+                return _deleteRowCommand ??=
+                    new DelegateCommand(
+                        () => { this.GridData.RemoveAt(this.ItemIndex); },
+                        () => { return this.ItemIndex >= 0 && this.ItemIndex != this.GridData.Count; }
+                        );
             }
         }
 
@@ -71,16 +37,16 @@ namespace case9
         } = new ObservableCollection<GridDataViewModel>()
         {
             new GridDataViewModel() { ID = 1, Name = "Tarou Suzuki", Sex = SexType.Male },
-            new GridDataViewModel() { ID = 2, Name = "鈴木 次郎", Sex = SexType.Other },
+            new GridDataViewModel() { ID = 2, Name = "田中 次郎", Sex = SexType.Other },
         };
         public enum SexType
-            {
-                Male,
-                Female,
-                Other,
-                DeclineToAnswer,
-            }
-        public class GridDataViewModel 
+        {
+            Male,
+            Female,
+            Other,
+            DeclineToAnswer,
+        }
+        public class GridDataViewModel
         {
             private int _id;
             public int ID
@@ -95,12 +61,25 @@ namespace case9
                 get { return _name; }
                 set { _name = value; }
             }
-            
+
             private SexType _sexType;
             public SexType Sex
             {
                 get { return _sexType; }
                 set { _sexType = value; }
+            }
+        }
+        private int _currentIndex { get; set; }
+
+        public int ItemIndex
+        {
+            set
+            {
+                _currentIndex = value;
+            }
+            get
+            {
+                return _currentIndex;
             }
         }
     }

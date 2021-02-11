@@ -8,6 +8,7 @@ namespace case9
         public event EventHandler CanExecuteChanged;
         private readonly Action _execute;
         private readonly Func< bool> _canExecute;
+        //<T>
 
         public DelegateCommand(Action execute, Func<bool> canExecute)
         {

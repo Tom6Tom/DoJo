@@ -1,10 +1,9 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
 
 namespace case9
 {
-    internal class ViewModel 
-    {   
+    internal class ViewModel
+    {
         private DelegateCommand _addRowCommand;
         public DelegateCommand AddRowCommand
         {
@@ -13,8 +12,8 @@ namespace case9
                 return _addRowCommand ??=
                     new DelegateCommand(
                         // TBD 入力ダイアログ
-                        () => { this.GridData.Add(new GridDataViewModel() { ID = -1, Name = "初期値 三郎", Sex = SexType.Other }); },
-                        () => { return true; }
+                        () => { GridData.Add(new GridDataViewModel() { ID = -1, Name = "初期値 三郎", Gender = GenderType.Other }); },
+                        () => true
                         );
             }
         }
@@ -25,8 +24,8 @@ namespace case9
             {
                 return _deleteRowCommand ??=
                     new DelegateCommand(
-                        () => { this.GridData.RemoveAt(this.ItemIndex); },
-                        () => { return this.ItemIndex >= 0 && this.ItemIndex != this.GridData.Count; }
+                        () => { GridData.RemoveAt(ItemIndex); },
+                         () => ItemIndex >= 0 && ItemIndex != GridData.Count
                         );
             }
         }
@@ -36,10 +35,10 @@ namespace case9
             get; set;
         } = new ObservableCollection<GridDataViewModel>()
         {
-            new GridDataViewModel() { ID = 1, Name = "Tarou Suzuki", Sex = SexType.Male },
-            new GridDataViewModel() { ID = 2, Name = "田中 次郎", Sex = SexType.Other },
+            new GridDataViewModel() { ID = 1, Name = "Tarou Suzuki", Gender = GenderType.Male },
+            new GridDataViewModel() { ID = 2, Name = "田中 次郎", Gender = GenderType.Other },
         };
-        public enum SexType
+        public enum GenderType
         {
             Male,
             Female,
@@ -48,10 +47,12 @@ namespace case9
         }
         public class GridDataViewModel
         {
+            // INotifyPropertyChanged
             private int _id;
             public int ID
             {
                 get { return _id; }
+                // イベント....
                 set { _id = value; }
             }
 
@@ -62,11 +63,11 @@ namespace case9
                 set { _name = value; }
             }
 
-            private SexType _sexType;
-            public SexType Sex
+            private GenderType _genderType;
+            public GenderType Gender
             {
-                get { return _sexType; }
-                set { _sexType = value; }
+                get { return _genderType; }
+                set { _genderType = value; }
             }
         }
         private int _currentIndex { get; set; }

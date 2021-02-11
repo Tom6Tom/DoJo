@@ -20,8 +20,10 @@
         </Menu>
         <DataGrid 
             Grid.Row="1" 
-            ItemsSource="{Binding GridData}" 
+            ItemsSource="{Binding GridData}"
             SelectedIndex="{Binding ItemIndex}"
             />
+        <!--CauUseAddRows="False"-->
+        <!--SelectedItemをつかう-->
     </Grid>
 </Window>
